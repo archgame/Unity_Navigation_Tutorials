@@ -15,6 +15,7 @@ public class Tracker : MonoBehaviour
     {
         //Debug.Log("Start");
         newPosition = Camera.main.transform.position;
+        Debug.Log("addition example: " + CoolAddition(2, 3));
     }
 
     // Update is called once per frame
@@ -36,53 +37,21 @@ public class Tracker : MonoBehaviour
         if (Input.GetMouseButtonUp(0))
         {
             Debug.Log("Left Click");
-
-            //creates a ray from the camera
-            Vector3 screenPoint = Input.mousePosition;
-            Debug.Log("screenPoint: " + screenPoint);
-            Ray ray = Camera.main.ScreenPointToRay(screenPoint);
-            float length = 200;
-            Debug.DrawRay(ray.origin, ray.direction * length,Color.red,2);
-
-            RaycastHit[] hits;
-            hits = Physics.RaycastAll(ray.origin, ray.direction, Mathf.Infinity); //find all gameobjects
-            Debug.Log("hits.Length: " + hits.Length);
-            foreach(RaycastHit hit in hits)
+            Vector3 hit = GetClickHit("ground");
+            if(hit != Vector3.zero)
             {
-                Debug.Log("name: " + hit.transform.gameObject.name);
-                if(hit.transform.gameObject.name == "ground")
-                {
-                    Debug.Log("'ground' hit!");
-                    Debug.Log("hit.point: " + hit.point);
-                    Debug.DrawRay(hit.point, Vector3.up * 50, Color.cyan, 2);
-                    target.transform.position = hit.point;
-                }
+                target.transform.position = hit;
             }
-
         }
 
         //Right mouse button click example
         if (Input.GetMouseButtonDown(1))
         {
             //Debug.Log("Right Click");
-
-            //creates a ray from the camera
-            Vector3 screenPoint = Input.mousePosition;
-            //Debug.Log("screenPoint: " + screenPoint);
-            Ray ray = Camera.main.ScreenPointToRay(screenPoint);
-            float length = 200;
-            Debug.DrawRay(ray.origin, ray.direction * length, Color.yellow, 2);
-
-            RaycastHit[] hits;
-            hits = Physics.RaycastAll(ray.origin, ray.direction, Mathf.Infinity); //find all gameobjects
-            //Debug.Log("hits.Length: " + hits.Length);
-            foreach (RaycastHit hit in hits)
+            Vector3 hit = GetClickHit("ground");
+            if (hit != Vector3.zero)
             {
-                //Debug.Log("name: " + hit.transform.gameObject.name);
-                if (hit.transform.gameObject.name == "ground")
-                {
-                    newPosition = hit.point;
-                }
+                newPosition = hit;
             }
         }
 
@@ -103,5 +72,30 @@ public class Tracker : MonoBehaviour
         {
             Debug.Log("space pressed.");
         }
+    }
+
+    int CoolAddition(int a, int b)
+    {
+        return a + b;
+    }
+
+    Vector3 GetClickHit(string tag)
+    {
+        //creates a ray from the camera
+        Vector3 screenPoint = Input.mousePosition;
+        Ray ray = Camera.main.ScreenPointToRay(screenPoint);
+
+        RaycastHit[] hits;
+        hits = Physics.RaycastAll(ray.origin, ray.direction, Mathf.Infinity);
+        foreach (RaycastHit hit in hits)
+        {
+            Debug.Log("name: " + hit.transform.gameObject.name);
+            if (hit.transform.gameObject.name == tag)
+            {
+                return hit.point;
+            }
+        }
+
+        return Vector3.zero;
     }
 }
