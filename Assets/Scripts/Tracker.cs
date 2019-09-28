@@ -49,6 +49,28 @@ public class Tracker : MonoBehaviour
         if (Input.GetMouseButtonDown(1))
         {
             Debug.Log("Right Click");
+
+            //creates a ray from the camera
+            Vector3 screenPoint = Input.mousePosition;
+            Debug.Log("screenPoint: " + screenPoint);
+            Ray ray = Camera.main.ScreenPointToRay(screenPoint);
+            float length = 200;
+            Debug.DrawRay(ray.origin, ray.direction * length, Color.yellow, 2);
+
+            RaycastHit[] hits;
+            hits = Physics.RaycastAll(ray.origin, ray.direction, Mathf.Infinity); //find all gameobjects
+            Debug.Log("hits.Length: " + hits.Length);
+            foreach (RaycastHit hit in hits)
+            {
+                Debug.Log("name: " + hit.transform.gameObject.name);
+                if (hit.transform.gameObject.name == "ground")
+                {
+                    float y = Camera.main.transform.position.y;
+                    float x = hit.point.x;
+                    float z = hit.point.z;
+                    Camera.main.transform.position = new Vector3(x, y, z);
+                }
+            }
         }
 
         //Middle mouse button click example
