@@ -10,6 +10,10 @@ public class Tracker : MonoBehaviour
     private Vector3 newPosition = Vector3.zero;
     //float example = 0;
 
+    float cameraY = 60f;
+    float minY = 20;
+    float maxY = 120;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,6 +25,12 @@ public class Tracker : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(Input.mouseScrollDelta != Vector2.zero)
+        {
+            Debug.Log("scroll: " + Input.mouseScrollDelta);
+            cameraY = Mathf.Clamp(cameraY + Input.mouseScrollDelta.y*-2, minY, maxY);
+        }
+
         //float example = 0;
         //Debug.Log("before example: " + example);
         //example = Mathf.Lerp(example, 10, 0.5f);
@@ -28,8 +38,8 @@ public class Tracker : MonoBehaviour
 
         //smoothly move camera
         Vector3 cameraPosition = Camera.main.transform.position;
-        newPosition.y = cameraPosition.y;
-        Vector3 smoothedPosition = Vector3.Lerp(cameraPosition, newPosition, smoothSpeed);
+        newPosition.y = cameraY;
+        Vector3 smoothedPosition = Vector3.Lerp(cameraPosition, newPosition, smoothSpeed);      
         Camera.main.transform.position = smoothedPosition;
 
         Vector3 clickPosition = Vector3.zero;
