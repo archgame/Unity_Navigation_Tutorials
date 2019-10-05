@@ -100,8 +100,8 @@ public class Tracker : MonoBehaviour
         hits = Physics.RaycastAll(ray.origin, ray.direction, Mathf.Infinity);
         foreach (RaycastHit hit in hits)
         {
-            Debug.Log("name: " + hit.transform.gameObject.name);
-            if (hit.transform.gameObject.name == tag)
+            Debug.Log("layer: " + LayerMask.NameToLayer(tag));
+            if (hit.transform.gameObject.layer == LayerMask.NameToLayer(tag))
             {
                 return hit.point;
             }
