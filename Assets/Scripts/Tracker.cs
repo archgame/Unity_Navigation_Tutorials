@@ -6,6 +6,7 @@ public class Tracker : MonoBehaviour
 {
     public bool run = false;
     public GameObject target;
+    
     public float smoothSpeed = 0.125f;
     private Vector3 newPosition = Vector3.zero;
     //float example = 0;
