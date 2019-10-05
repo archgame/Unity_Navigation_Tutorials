@@ -225,7 +225,7 @@ GameObject:
   - component: {fileID: 225499753}
   m_Layer: 0
   m_Name: Target (2)
-  m_TagString: Untagged
+  m_TagString: Target
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -317,7 +317,7 @@ GameObject:
   - component: {fileID: 536691738}
   m_Layer: 0
   m_Name: Target (5)
-  m_TagString: Untagged
+  m_TagString: Target
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1663,7 +1663,7 @@ GameObject:
   - component: {fileID: 868502390}
   m_Layer: 0
   m_Name: Target (4)
-  m_TagString: Untagged
+  m_TagString: Target
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1755,7 +1755,7 @@ GameObject:
   - component: {fileID: 979690046}
   m_Layer: 0
   m_Name: Target (1)
-  m_TagString: Untagged
+  m_TagString: Target
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1985,13 +1985,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6ed59c5433f81248bc6dd4af0daf83b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targets:
-  - {fileID: 1628049252}
-  - {fileID: 979690049}
-  - {fileID: 225499756}
-  - {fileID: 1918536329}
-  - {fileID: 868502393}
-  - {fileID: 536691741}
+  targets: []
   changeTargetDistance: 3
 --- !u!195 &1241937827
 NavMeshAgent:
@@ -2103,7 +2097,7 @@ GameObject:
   - component: {fileID: 1628049249}
   m_Layer: 0
   m_Name: Target
-  m_TagString: Untagged
+  m_TagString: Target
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2215,12 +2209,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targets:
-  - {fileID: 1918536329}
-  - {fileID: 979690049}
-  - {fileID: 225499756}
-  - {fileID: 1628049252}
-  - {fileID: 868502393}
-  - {fileID: 536691741}
+  - {fileID: 1628049248}
+  - {fileID: 979690045}
+  - {fileID: 225499752}
+  - {fileID: 1918536325}
+  - {fileID: 868502389}
+  - {fileID: 536691737}
   changeTargetDistance: 3
 --- !u!195 &1828903340
 NavMeshAgent:
@@ -2332,7 +2326,7 @@ GameObject:
   - component: {fileID: 1918536326}
   m_Layer: 0
   m_Name: Target (3)
-  m_TagString: Untagged
+  m_TagString: Target
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2443,13 +2437,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6ed59c5433f81248bc6dd4af0daf83b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targets:
-  - {fileID: 536691741}
-  - {fileID: 979690049}
-  - {fileID: 225499756}
-  - {fileID: 1918536329}
-  - {fileID: 868502393}
-  - {fileID: 1628049252}
+  targets: []
   changeTargetDistance: 3
 --- !u!195 &2130307222
 NavMeshAgent:
