@@ -20,7 +20,7 @@ public class Tracker : MonoBehaviour
     {
         //Debug.Log("Start");
         newPosition = Camera.main.transform.position;
-        Debug.Log("addition example: " + CoolAddition(2, 3));
+        //Debug.Log("addition example: " + CoolAddition(2, 3));
     }
 
     // Update is called once per frame
