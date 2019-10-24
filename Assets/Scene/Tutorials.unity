@@ -1922,7 +1922,7 @@ MonoBehaviour:
   - Park
   position: {x: 0, y: 0, z: 0}
   changeTargetDistance: 4
-  shuffleTargets: 1
+  shuffleTargets: 0
   targets:
   - {fileID: 868502389}
   - {fileID: 1918536325}
@@ -1948,7 +1948,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 0
+  m_Speed: 10
   m_Acceleration: 20
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -2028,7 +2028,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1241937825}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -262.4, y: 1.6, z: -59.3}
+  m_LocalPosition: {x: -262.4, y: 1.9, z: -58.89}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2330,7 +2330,7 @@ MonoBehaviour:
   - Park
   position: {x: 0, y: 0, z: 0}
   changeTargetDistance: 4
-  shuffleTargets: 1
+  shuffleTargets: 0
   targets:
   - {fileID: 868502389}
   - {fileID: 1918536325}
@@ -2356,7 +2356,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 0
+  m_Speed: 10
   m_Acceleration: 20
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -2436,7 +2436,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1828903338}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -258.09998, y: 1.6, z: -59.8}
+  m_LocalPosition: {x: -258.09998, y: 1.6, z: -59.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2594,7 +2594,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 35.09, y: 4.19, z: 2.32}
+  m_Size: {x: 19.24, y: 4.19, z: 2.32}
   m_Center: {x: 9.35, y: 0, z: 0}
 --- !u!114 &2069215991
 MonoBehaviour:
@@ -2667,7 +2667,7 @@ MonoBehaviour:
   - Park
   position: {x: 0, y: 0, z: 0}
   changeTargetDistance: 4
-  shuffleTargets: 1
+  shuffleTargets: 0
   targets:
   - {fileID: 868502389}
   - {fileID: 1918536325}
@@ -2693,7 +2693,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 0
+  m_Speed: 10
   m_Acceleration: 20
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -2773,7 +2773,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2130307220}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -259.9, y: 1.6, z: -59.600002}
+  m_LocalPosition: {x: -259.9, y: 1.6, z: -59.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
