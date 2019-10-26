@@ -24,6 +24,9 @@ public class Bicycle : MonoBehaviour
     public float waitTime = 60;
     private bool waiting = false;
     private float waited = 0;
+    private bool parking = false;
+    GameObject lastTarget;
+
 
     [Header("Agent Size")]
     public float TurningMultiplier = 1;
@@ -112,7 +115,11 @@ public class Bicycle : MonoBehaviour
                 float distanceToTarget = Vector3.Distance(agent.transform.position, target.transform.position);
                 //change target once it is reached
                 if (changeTargetDistance > distanceToTarget) //have we reached our target
-                {                   
+                {
+
+                    parking = true;
+                    lastTarget = target;
+
                     t++;
                     if (t == targets.Length)
                     {
@@ -122,8 +129,7 @@ public class Bicycle : MonoBehaviour
                     target = targets[t];
                     agent.SetDestination(target.transform.position); //each frame set the agent's destination to the target position
                     waiting = true;
-                    agent.isStopped = true;
-
+                    agent.isStopped = true;                   
                 } // changeTargetDistance test
 
                 Debug.Log(gameObject.name + " : " + agent.hasPath);
@@ -144,13 +150,48 @@ public class Bicycle : MonoBehaviour
             if(target.name.Contains("BikeStop"))
             {
                 GameObject[] spots = target.GetComponent<BikeStop>().spots;
-                target = spots[0];
-                position = target.transform.position;
-                agent.SetDestination(position);
-            }
+                GameObject[] bikes = target.GetComponent<BikeStop>().bikes;
+
+                for(int i = 0;i<bikes.Length;i++)
+                {
+                    if(bikes[i] == null)
+                    {
+                        bikes[i] = gameObject;
+                        target = spots[i];
+                        position = target.transform.position;
+                        agent.SetDestination(position);
+                        break;
+                    } //if there is no bike in the spot
+                } // for each bike spot       
+                
+            } // if "BikeStop"
         }
 
+        if(parking)
+        {
+            Vector3 parkingPosition = lastTarget.transform.position; //parking spot position
+            float dist = Vector3.Distance(parkingPosition, transform.position);
+            Vector3 levelPosition = new Vector3(
+                parkingPosition.x, 
+                transform.position.y, 
+                parkingPosition.z); //parking spot position at bicycle height
 
+            if(transform.position != levelPosition)
+            {
+                Debug.Log("parking...");
+                transform.position = Vector3.Lerp(
+                    transform.position, 
+                    levelPosition, 
+                    0.02f); //smoothly moving bicycle to parking spot
+                transform.forward = Vector3.Lerp(
+                    transform.forward,
+                    -lastTarget.transform.right,
+                    0.04f); //smoothly moving bicycle to parking spot
+            }
+
+
+
+        }
     }
 
     void OnTriggerEnter(Collider collision)

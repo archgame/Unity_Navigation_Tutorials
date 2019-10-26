@@ -6,6 +6,7 @@ public class BikeStop : MonoBehaviour
 {
     string SpotName = "ParkingSpot";
     public GameObject[] spots;
+    public GameObject[] bikes;
 
     // Start is called before the first frame update
     void Start()
@@ -21,6 +22,8 @@ public class BikeStop : MonoBehaviour
         }
 
         spots = children.ToArray();
+        bikes = new GameObject[spots.Length];
+
         spots = Shuffle(spots);
     }
 
