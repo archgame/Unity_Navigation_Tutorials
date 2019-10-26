@@ -21,23 +21,12 @@ public class Bicycle : MonoBehaviour
     public GameObject[] targets;
 
     [Header("Wait Times")]
-    public float waitTimeShortMin = 0;
-    public float waitTimeShortMax = 0;
-    public float waitTimeLongMin = 0;
-    public float waitTimeLongMax = 0;
-
     public float waitTime = 60;
     private bool waiting = false;
     private float waited = 0;
 
     [Header("Agent Size")]
-    public bool randomScale = false;
-    public float xmin = 1;
-    public float xmax = 1;
-    public float ymin = 1;
-    public float ymax = 1;
-    public float zmin = 1;
-    public float zmax = 1;
+    public float TurningMultiplier = 1;
     #endregion
 
     // Start is called before the first frame update
@@ -85,6 +74,7 @@ public class Bicycle : MonoBehaviour
     {
         if (agent.enabled)
         {
+            //update target if it moves
             if (target.transform.position != position)
             {
                 position = target.transform.position;
@@ -142,8 +132,25 @@ public class Bicycle : MonoBehaviour
                     position = target.transform.position;
                     agent.SetDestination(position);
                 }
+
+                if (agent.hasPath)
+                {
+                    Vector3 toSteeringTarget = agent.steeringTarget - transform.position;
+                    float turnAngle = Vector3.Angle(transform.forward, toSteeringTarget);
+                    agent.acceleration = turnAngle * agent.speed * TurningMultiplier;
+                }
+            }
+
+            if(target.name.Contains("BikeStop"))
+            {
+                GameObject[] spots = target.GetComponent<BikeStop>().spots;
+                target = spots[0];
+                position = target.transform.position;
+                agent.SetDestination(position);
             }
         }
+
+
     }
 
     void OnTriggerEnter(Collider collision)
