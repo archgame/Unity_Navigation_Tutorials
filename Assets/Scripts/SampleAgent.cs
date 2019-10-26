@@ -125,6 +125,9 @@ public class SampleAgent : MonoBehaviour
             {
                 //see agent's next destination
                 Debug.DrawLine(transform.position, agent.steeringTarget, Color.black);
+                Debug.DrawLine(transform.position, agent.pathEndPosition, Color.cyan);
+                Debug.DrawRay(agent.pathEndPosition, Vector3.up * 40, Color.red);
+                Debug.DrawRay(target.transform.position, Vector3.up * 40, Color.yellow);
 
                 float distanceToTarget = Vector3.Distance(agent.transform.position, target.transform.position);
                 //change target once it is reached
@@ -174,6 +177,13 @@ public class SampleAgent : MonoBehaviour
                     agent.isStopped = true;
 
                 } // changeTargetDistance test
+
+                Debug.Log(gameObject.name + " : " + agent.hasPath);
+                if (!agent.hasPath) //cath agent error when agent doesn't resume
+                {
+                    position = target.transform.position;
+                    agent.SetDestination(position);
+                }
             }
         }
     }
