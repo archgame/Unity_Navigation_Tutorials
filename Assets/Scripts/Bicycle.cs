@@ -24,6 +24,7 @@ public class Bicycle : MonoBehaviour
     public float waitTime = 60;
     private bool waiting = false;
     private float waited = 0;
+    private bool aligned = false;
     private bool parking = false;
     GameObject lastTarget;
 
@@ -167,27 +168,67 @@ public class Bicycle : MonoBehaviour
             } // if "BikeStop"
         }
 
-        if(parking)
+        if (parking)
         {
-            Vector3 parkingPosition = lastTarget.transform.position; //parking spot position
-            float dist = Vector3.Distance(parkingPosition, transform.position);
+            Vector3 parkingPosition = lastTarget.transform.position + lastTarget.transform.right * 1.8f; //parking spot position
+            Debug.DrawRay(parkingPosition, Vector3.up * 10, Color.magenta);
+            Debug.DrawRay(lastTarget.transform.position, Vector3.up * 10,Color.black);                       
             Vector3 levelPosition = new Vector3(
                 parkingPosition.x, 
                 transform.position.y, 
                 parkingPosition.z); //parking spot position at bicycle height
 
-            if(transform.position != levelPosition)
+            float dist = Vector3.Distance(levelPosition, transform.position);
+            if (transform.position != levelPosition)
             {
                 Debug.Log("parking...");
                 transform.position = Vector3.Lerp(
-                    transform.position, 
-                    levelPosition, 
+                    transform.position,
+                    levelPosition,
                     0.02f); //smoothly moving bicycle to parking spot
                 transform.forward = Vector3.Lerp(
                     transform.forward,
                     -lastTarget.transform.right,
                     0.04f); //smoothly moving bicycle to parking spot
+                if (dist < 0.1f)
+                {
+                    parking = false;
+                    aligned = true;
+                }
             }
+
+
+
+
+
+        }
+        if (aligned)
+        {
+            Vector3 parkingPosition = lastTarget.transform.position; //parking spot position
+            Vector3 levelPosition = new Vector3(
+                parkingPosition.x,
+                transform.position.y,
+                parkingPosition.z); //parking spot position at bicycle height
+
+            float dist = Vector3.Distance(levelPosition, transform.position);
+            if (transform.position != levelPosition)
+            {
+                Debug.Log("parking...");
+                transform.position = Vector3.Lerp(
+                    transform.position,
+                    levelPosition,
+                    0.02f); //smoothly moving bicycle to parking spot
+                transform.forward = Vector3.Lerp(
+                    transform.forward,
+                    -lastTarget.transform.right,
+                    0.04f); //smoothly moving bicycle to parking spot
+                if (dist < 0.1f)
+                {
+                    aligned = false;
+                }
+            }
+
+
 
 
 
