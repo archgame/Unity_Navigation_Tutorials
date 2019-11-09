@@ -39,6 +39,7 @@ public class PickUp : MonoBehaviour
             isStopped = true;
 
             //deboarding
+            int count = 0;
             List<int> removeIndexes = new List<int>();
             for(int i = 0; i< passengerStops.Count;i++)
             {
@@ -59,6 +60,11 @@ public class PickUp : MonoBehaviour
                     removeIndexes.Add(i);
                     //passenger.transform.position = parent.transform.position;
                     //Debug.DrawRay(parent.transform.position, Vector3.up*100, Color.magenta,2);
+                    count++;
+                    if(count == 5)
+                    {
+                        break;
+                    }
                 }
                 //*/
             }

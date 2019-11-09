@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEditor;
 
 public class Bicycle : MonoBehaviour
 {
@@ -133,7 +134,7 @@ public class Bicycle : MonoBehaviour
                     agent.isStopped = true;                   
                 } // changeTargetDistance test
 
-                Debug.Log(gameObject.name + " : " + agent.hasPath);
+                //Debug.Log(gameObject.name + " : " + agent.hasPath);
                 if (!agent.hasPath) //cath agent error when agent doesn't resume
                 {
                     position = target.transform.position;
@@ -144,7 +145,7 @@ public class Bicycle : MonoBehaviour
                 {
                     Vector3 toSteeringTarget = agent.steeringTarget - transform.position;
                     float turnAngle = Vector3.Angle(transform.forward, toSteeringTarget);
-                    agent.acceleration = turnAngle * agent.speed * TurningMultiplier;
+                    //agent.acceleration = turnAngle * agent.speed * TurningMultiplier;
                 }
             }
 
@@ -196,11 +197,6 @@ public class Bicycle : MonoBehaviour
                     aligned = true;
                 }
             }
-
-
-
-
-
         }
         if (aligned)
         {
@@ -233,11 +229,38 @@ public class Bicycle : MonoBehaviour
 
 
         }
+
+        NavMeshHit navHit;
+        agent.SamplePathPosition(-1, 0.0f, out navHit);
+        Debug.Log("mask: " + navHit.mask);
+        int parkArea = 1 << NavMesh.GetAreaFromName("Park");
+        Debug.Log("parkArea " + parkArea);
+        if (parkArea == navHit.mask)
+        {
+            agent.speed = 2;
+            agent.acceleration = 2;
+            Debug.Log("Change Speed");
+        }
+        else
+        {
+            agent.speed = 16;
+            agent.acceleration = 16;
+        }
+
+        string[] names = GameObjectUtility.GetNavMeshAreaNames();
+        for (int i = 0; i < names.Length; ++i)
+        {
+            int mask = 1 << NavMesh.GetAreaFromName(names[i]);
+            if ((navHit.mask & mask) != 0)
+            {
+                //Debug.Log(".. that's \"" + names[i] + "\"");
+            }
+        }
     }
 
     void OnTriggerEnter(Collider collision)
     {
-   
+
     }
 
     void OnTriggerExit(Collider collision)
