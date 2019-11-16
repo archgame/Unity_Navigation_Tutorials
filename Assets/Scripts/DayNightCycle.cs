@@ -13,10 +13,10 @@ public class DayNightCycle : MonoBehaviour
 
     [Header("Time")]
     public Text text;
-    public float time;
-    public TimeSpan currentTime;
-    public int days;
-    public float speed;
+    private float time;
+    private TimeSpan currentTime;
+    private int days;
+    private float speed = 1000f;
 
     [Header("Lighting")]
     private float sunintensity;
@@ -80,5 +80,25 @@ public class DayNightCycle : MonoBehaviour
         }
         sun.GetComponent<Light>().intensity = sunintensity;
         moon.GetComponent<Light>().intensity = moonintensity;
+    }
+
+    public float Get_Time()
+    {
+        return time;
+    }
+
+    public int Get_Days()
+    {
+        return days;
+    }
+
+    public float Get_Speed()
+    {
+        return speed;
+    }
+
+    public void Change_Speed(float speedUpdate)
+    {
+        speed = speedUpdate;
     }
 }

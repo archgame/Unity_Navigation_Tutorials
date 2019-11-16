@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using System.Linq;
 
 public class Car : MonoBehaviour
 {
@@ -12,7 +13,9 @@ public class Car : MonoBehaviour
 
 
     [Header("Target Info")]
+    public string targetTag = "Target";
     public string[] targetNames;
+    public char splitter = '-';
     [HideInInspector]
     public Vector3 position;
     public float changeTargetDistance = 3;
@@ -37,11 +40,22 @@ public class Car : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //target setup
         gameObject.tag = "Agent";
-        GetTargets(new string[] { targetNames[0] });
+        agent = GetComponent<NavMeshAgent>();
 
+        targets = GetTargets(targetTag, new string[] { targetNames[0] });
+        targets = OrderByLastNamePart(targets, splitter);
+        if(shuffleTargets)
+        {
+            targets = Shuffle(targets);
+        }      
+        target = targets[0];
+        agent.SetDestination(target.transform.position);
+
+        //time
         timeScript = Camera.main.GetComponent<DayNightCycle>();
-        float now = timeScript.time;
+        float now = timeScript.Get_Time();
         if (nightime && now > 21600 && now < 64800) //daytime
         {
             nightime = false;
@@ -56,12 +70,19 @@ public class Car : MonoBehaviour
     void Update()
     {
         //time
-        float now = timeScript.time;
+        float now = timeScript.Get_Time();
         if(nightime && now > 21600 && now < 64800) //daytime
         {
             nightime = false;
             targets = new GameObject[0];
-            GetTargets(new string[] { targetNames[1] });
+            targets = GetTargets(targetTag, new string[] { targetNames[1] });
+            targets = OrderByLastNamePart(targets, splitter);
+            if (shuffleTargets)
+            {
+                targets = Shuffle(targets);
+            }
+            target = targets[0];
+            agent.SetDestination(target.transform.position);
         }
         if (!nightime)
         {
@@ -69,7 +90,14 @@ public class Car : MonoBehaviour
             {
                 nightime = true;
                 targets = new GameObject[0];
-                GetTargets(new string[] { targetNames[0] });
+                targets = GetTargets(targetTag, new string[] { targetNames[0] });
+                targets = OrderByLastNamePart(targets, splitter);
+                if (shuffleTargets)
+                {
+                    targets = Shuffle(targets);
+                }
+                target = targets[0];
+                agent.SetDestination(target.transform.position);
             }
         }
 
@@ -195,7 +223,7 @@ public class Car : MonoBehaviour
 
     private int obstacles = 0;
 
-    GameObject[] Shuffle(GameObject[] objects)
+    private GameObject[] Shuffle(GameObject[] objects)
     {
         GameObject tempGO;
         for (int i = 0; i < objects.Length; i++)
@@ -210,41 +238,35 @@ public class Car : MonoBehaviour
         return objects;
     }
 
-    private void GetTargets(string[] targetByNames)
+    private GameObject[] GetTargets(string tag, string[] targetByNames)
     {
-        //grab targets using tags
-        if (targets.Length == 0)
-        {
-            //get all game objects tagged with "Target"
-            targets = GameObject.FindGameObjectsWithTag("Target");
+        //get all game objects tagged with "Target"
+        GameObject[] goArray = GameObject.FindGameObjectsWithTag(tag);
 
-            List<GameObject> targetList = new List<GameObject>();
-            foreach (GameObject go in targets) //search all "Target" game objects
+        List<GameObject> targetList = new List<GameObject>();
+        foreach (GameObject go in goArray) //search all "Target" game objects
+        {
+            //Debug.Log("go: " + go.name);
+            foreach (string targetName in targetByNames)
             {
-                //Debug.Log("go: " + go.name);
-                foreach (string targetName in targetByNames)
+                //Debug.Log("targetName: " + targetName);
+                // "Target" contains: "Tar", "Targ", "get", ! "Trgt"
+                if (go.name.Contains(targetName)) //if GameObject has the same name as targetName, add to list
                 {
-                    //Debug.Log("targetName: " + targetName);
-                    // "Target" contains: "Tar", "Targ", "get", ! "Trgt"
-                    if (go.name.Contains(targetName)) //if GameObject has the same name as targetName, add to list
-                    {
-                        targetList.Add(go);
-                    }
+                    targetList.Add(go);
                 }
             }
-            targets = targetList.ToArray(); //Convert List to Array, because other code is still using array
         }
-
-        //shuffle targets
-        if (shuffleTargets)
-        {
-            targets = Shuffle(targets);
-        }
+        return targetList.ToArray(); //Convert List to Array, because other code is still using array
         //Debug.Log(this.name + " has " + targets.Length + "Targets");
+    }
 
-        agent = GetComponent<NavMeshAgent>(); //set the agent variable to this game object's navmesh
-        t = 0;
-        target = targets[t];
-        agent.SetDestination(target.transform.position);
+    private GameObject[] OrderByLastNamePart(GameObject[] unsortedArray, char c)
+    {
+        GameObject[] sortedArray = unsortedArray.OrderBy(go => 
+        go.name.Split(c)[go.name.Split(c).Length - 1]
+        ).ToArray();
+        //sortedArray = sortedArray.Reverse().ToArray();
+        return sortedArray;
     }
 }
