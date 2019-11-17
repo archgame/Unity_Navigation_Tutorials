@@ -206,6 +206,20 @@ public class Car : MonoBehaviour
             agent.isStopped = true;
             obstacles++; // obstacles = obstacles + 1; || obstacles += 1;
         }
+
+        if(collision.gameObject.name.Contains("RedLight"))
+        {
+            agent.isStopped = true;
+            obstacles++; // obstacles = obstacles + 1; || obstacles += 1;
+        }
+        if (collision.gameObject.name.Contains("GreenLight"))
+        {
+            obstacles--; //count as obstacle removal
+            if (obstacles == 0) //once there are zero obstacles, start the agent moving
+            {
+                agent.isStopped = false;
+            }
+        }
     }
 
     void OnTriggerExit(Collider collision)

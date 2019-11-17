@@ -30,6 +30,10 @@ public class Intersection : MonoBehaviour
         trafficLights[1].SetActive(l2);
         trafficLights[2].SetActive(l3);
         trafficLights[3].SetActive(l4);
+        trafficLights[4].SetActive(!l1);
+        trafficLights[5].SetActive(!l2);
+        trafficLights[6].SetActive(!l3);
+        trafficLights[7].SetActive(!l4);
 
         crosswalks[0].SetActive(!l1);
         crosswalks[1].SetActive(!l2);
